@@ -1,0 +1,12 @@
+.hidden {
+  display:none;
+}
+
+.inline {
+  width:auto;
+  display:inline-block;
+}
+
+.spaced {
+  margin-bottom:10px;
+}

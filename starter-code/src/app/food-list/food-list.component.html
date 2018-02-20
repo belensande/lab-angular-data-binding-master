@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-sm-8">
+    <button class="spaced btn btn-primary" *ngIf="isAddFormHidden" (click)="toggleForm()">Create food</button>
+    <div *ngIf="!isAddFormHidden">
+      <h2>Add new food</h2>
+      <div class="form-group">
+        <label for="food-name">Name </label>
+        <input type="text" class="form-control" [(ngModel)]="newFood.name">
+      </div>
+      <div class="form-group">
+        <label for="contact-email">Calories </label>
+        <input type="number" class="form-control" [(ngModel)]="newFood.calories">
+      </div>
+      <div class="form-group">
+        <label for="contact-image">Image url</label>
+        <input type="text" class="form-control" [(ngModel)]="newFood.image">
+      </div>
+      <button class="btn btn-primary" (click)="addFood()">Save</button>
+    </div>
+    <br>
+    <div class="form-group">
+      <label for="foodName"> Search food: </label>
+      <input id="foodName" placeholder="Search for name" class="form-control"
+             type="text" [(ngModel)]="pattern">
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-8 spaced">
+    <div class="list-group-item col-sm-12" *ngFor="let food of foodList| filter:'name':pattern">
+      <img [src]="food.image" class="img-thumbnail col-sm-6" />
+      <div class="col-sm-6">
+        <h3>{{ food.name }}</h3>
+        <h5>Calories: {{ food.calories }} </h5>
+        <button class="btn btn-default" (click)="addTodayFood(food)">+</button>
+        <input type="number" min="0" class="inline form-control" (input)="updateTotalCalories(food)" [ngModel]='quantityDefault' (ngModelChange)="food.quantity = $event" (blur)="quantity.value = +quantity.value || quantityDefault" #quantity>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <h2>Today's food {{totalCalories}} Kcal</h2>
+    <ul>
+      <li *ngFor="let food of todayFood">
+        <h4>{{food.name}} {{food.calories}} {{food.quantity > 1 ? 'x'+food.quantity : ''}}</h4>
+      </li>
+    </ul>
+  </div>
+</div>
